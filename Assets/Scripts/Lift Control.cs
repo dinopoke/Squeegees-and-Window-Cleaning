@@ -10,6 +10,8 @@ public class LiftControl : MonoBehaviour
 
     public CameraManager cameraManager;
 
+    public WindowDetector windowDetector;
+
     public float speed = 10;
     private Vector2 moveInput;
     private Rigidbody rb;
@@ -34,12 +36,27 @@ public class LiftControl : MonoBehaviour
 
     void SwapCamera(InputAction.CallbackContext context) {
         if(context.performed){
-            cameraManager.SwapCameras();
+            if(GameManager.Instance.canClean == true){
+                cameraManager.SwapCameras();
+                if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
+                    GameManager.Instance.currentGamestate = GameManager.GameState.cleaning;
+                    windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = true;
+                }
+                else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){
+                    windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = false;
+                    GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
+
+                }
+            }
+
         }
     }
 
     void LiftMove(InputAction.CallbackContext context) {
-        moveInput = context.ReadValue<Vector2>();
+        if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
+            moveInput = context.ReadValue<Vector2>();
+        }
+
     }
     // Start is called before the first frame update
     void Start()

@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 2551318473193460312}
   - component: {fileID: 4238676625281114895}
   - component: {fileID: 324057221518855894}
+  - component: {fileID: 5636222236070880535}
   m_Layer: 0
   m_Name: Window
-  m_TagString: Untagged
+  m_TagString: Window
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6218165597899586388}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.70710576, z: -0, w: 0.7071079}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 15, z: 20}
   m_ConstrainProportionsScale: 0
@@ -63,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: d46fb1f37ecc4584ba5fcc274a715939, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -113,7 +114,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6218165597899586388}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2e6d60bc8438c514e8a20fc61712f8e0, type: 3}
   m_Name: 
@@ -123,3 +124,21 @@ MonoBehaviour:
   cleanableWindowShader: {fileID: 4800000, guid: b426903ed7e6bcf4c93031e22c5848b7, type: 3}
   cleaningSpeed: 0.25
   cursorSpeed: 0.5
+--- !u!114 &5636222236070880535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6218165597899586388}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0.9951428, g: 1, b: 0, a: 1}
+  outlineWidth: 13.8
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []

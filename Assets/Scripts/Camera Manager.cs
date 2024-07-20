@@ -20,11 +20,11 @@ public class CameraManager : MonoBehaviour
     }
 
     public void SwapCameras(){
-        if (windowCamera.activeSelf == true){
+        if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){
             windowCamera.SetActive(false);
             buildingCamera.SetActive(true);
         }
-        else{
+        else if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
             windowCamera.SetActive(true);
             buildingCamera.SetActive(false);
         }

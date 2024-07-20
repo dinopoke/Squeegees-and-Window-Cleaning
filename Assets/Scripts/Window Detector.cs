@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WindowDetector : MonoBehaviour
 {
+
+    public GameObject currentWindow;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,17 +20,18 @@ public class WindowDetector : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Window")){
-            other.gameObject.GetComponent<CleanableWindow>().enabled = true;
-            other.gameObject.GetComponent<Outline>().enabled = true;
+            GameManager.Instance.canClean = true;
+            currentWindow = other.gameObject;
+            currentWindow.GetComponent<Outline>().enabled = true;
 
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if(other.gameObject.CompareTag("Window")){
-            other.gameObject.GetComponent<CleanableWindow>().enabled = false;
-            other.gameObject.GetComponent<Outline>().enabled = false;
-
+            GameManager.Instance.canClean = false;
+            currentWindow.GetComponent<Outline>().enabled = false;
+            currentWindow = null;
         }
     }
 }
