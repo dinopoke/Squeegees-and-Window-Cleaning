@@ -33,7 +33,7 @@ namespace PlayerControls
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""98483a23-39d2-4781-9da5-d45c1980da26"",
-                    ""expectedControlType"": ""Axis"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -55,6 +55,15 @@ namespace PlayerControls
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Lift Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""c067319d-6b93-4f1d-93f6-9cedcce7a4d5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -62,6 +71,17 @@ namespace PlayerControls
                     ""name"": """",
                     ""id"": ""10c1dedc-c7b0-4106-bf2c-8929690c6e3f"",
                     ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af8bbea2-8f2d-4ef5-a361-a8c9a2ad5736"",
+                    ""path"": ""<Mouse>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -82,6 +102,17 @@ namespace PlayerControls
                 },
                 {
                     ""name"": """",
+                    ""id"": ""acab8c19-b1a1-4260-a7d1-b59a6f6cf57f"",
+                    ""path"": ""<Mouse>/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Clean"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""e7cd76fd-ff97-4c71-a9db-9259746ffd4c"",
                     ""path"": ""<Gamepad>/buttonEast"",
                     ""interactions"": """",
@@ -90,6 +121,127 @@ namespace PlayerControls
                     ""action"": ""Switch Camera"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8c4af4fd-df6b-4453-b92b-37c10bb90bd6"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1cc26360-65c6-4231-a8e9-9cdff18f5973"",
+                    ""path"": ""<Gamepad>/dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""c6b2f040-35b9-4f31-97b8-d4dd1c0e837f"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""ebdc94bb-9fc5-4943-ab62-346299ff5605"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1e02e977-ea5f-4e64-be21-84303a8df83e"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6a5c1cc2-0057-4a0a-a8a7-8c985fd74a9e"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""6a4159c6-2c82-4b45-a6f6-7384436298e2"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""dff2ca97-8f96-47f0-b773-10177224e292"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""1968c238-a607-4988-97c2-4ffd700889f1"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""1e069a10-8d19-4fef-92de-47f64d88ba14"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""b0944e76-cec0-494e-9870-81fc1c9bfdac"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Lift Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -101,6 +253,7 @@ namespace PlayerControls
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Clean = m_Player.FindAction("Clean", throwIfNotFound: true);
             m_Player_SwitchCamera = m_Player.FindAction("Switch Camera", throwIfNotFound: true);
+            m_Player_LiftMove = m_Player.FindAction("Lift Move", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -165,6 +318,7 @@ namespace PlayerControls
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Clean;
         private readonly InputAction m_Player_SwitchCamera;
+        private readonly InputAction m_Player_LiftMove;
         public struct PlayerActions
         {
             private @Input m_Wrapper;
@@ -172,6 +326,7 @@ namespace PlayerControls
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Clean => m_Wrapper.m_Player_Clean;
             public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
+            public InputAction @LiftMove => m_Wrapper.m_Player_LiftMove;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -190,6 +345,9 @@ namespace PlayerControls
                 @SwitchCamera.started += instance.OnSwitchCamera;
                 @SwitchCamera.performed += instance.OnSwitchCamera;
                 @SwitchCamera.canceled += instance.OnSwitchCamera;
+                @LiftMove.started += instance.OnLiftMove;
+                @LiftMove.performed += instance.OnLiftMove;
+                @LiftMove.canceled += instance.OnLiftMove;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -203,6 +361,9 @@ namespace PlayerControls
                 @SwitchCamera.started -= instance.OnSwitchCamera;
                 @SwitchCamera.performed -= instance.OnSwitchCamera;
                 @SwitchCamera.canceled -= instance.OnSwitchCamera;
+                @LiftMove.started -= instance.OnLiftMove;
+                @LiftMove.performed -= instance.OnLiftMove;
+                @LiftMove.canceled -= instance.OnLiftMove;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -225,6 +386,7 @@ namespace PlayerControls
             void OnMove(InputAction.CallbackContext context);
             void OnClean(InputAction.CallbackContext context);
             void OnSwitchCamera(InputAction.CallbackContext context);
+            void OnLiftMove(InputAction.CallbackContext context);
         }
     }
 }
