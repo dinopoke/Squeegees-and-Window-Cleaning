@@ -7,6 +7,7 @@ public class CleanableWindow : MonoBehaviour {
     public Shader cleanableWindowShader;
     public float cleaningSpeed = 0.5f; // Speed of the cleaning tool
     public float cursorSpeed = 0.5f; // Speed of cursor movement
+    public int cleanRadius = 20;
 
     private Texture2D maskTexture;
     private Material material;
@@ -82,7 +83,7 @@ public class CleanableWindow : MonoBehaviour {
         int x = (int)(uv.x * maskTexture.width);
         int y = (int)(uv.y * maskTexture.height);
 
-        int radius = 10;
+        int radius = cleanRadius;
         for (int i = -radius; i <= radius; i++) {
             for (int j = -radius; j <= radius; j++) {
                 int newX = Mathf.Clamp(x + i, 0, maskTexture.width - 1);
