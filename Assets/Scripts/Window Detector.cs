@@ -19,12 +19,16 @@ public class WindowDetector : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Window")){
             other.gameObject.GetComponent<CleanableWindow>().enabled = true;
+            other.gameObject.GetComponent<Outline>().enabled = true;
+
         }
     }
 
     private void OnTriggerExit(Collider other) {
         if(other.gameObject.CompareTag("Window")){
             other.gameObject.GetComponent<CleanableWindow>().enabled = false;
+            other.gameObject.GetComponent<Outline>().enabled = false;
+
         }
     }
 }
