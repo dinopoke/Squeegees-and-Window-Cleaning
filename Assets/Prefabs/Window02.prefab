@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 324057221518855894, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: cursorSpeed
-      value: 0.1
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 324057221518855894, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: cleanTexture

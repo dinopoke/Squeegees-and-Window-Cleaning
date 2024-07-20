@@ -7,10 +7,12 @@ public class CameraManager : MonoBehaviour
     public GameObject windowCamera;
     public GameObject buildingCamera;
 
+    private float windowCamZPos;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        windowCamZPos = windowCamera.transform.position.z;
     }
 
     // Update is called once per frame
@@ -18,6 +20,11 @@ public class CameraManager : MonoBehaviour
     {
         
     }
+
+    public void SetWindowCameraPosition(Vector2 windowPosition) {
+        windowCamera.transform.position = new(windowPosition.x, windowPosition.y, windowCamZPos);
+    }
+
 
     public void SwapCameras(){
         if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){

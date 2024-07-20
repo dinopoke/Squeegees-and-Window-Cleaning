@@ -5,6 +5,8 @@ using UnityEngine;
 public class WindowDetector : MonoBehaviour
 {
 
+    [SerializeField] private CameraManager cameraManager;
+
     public GameObject currentWindow;
     // Start is called before the first frame update
     void Start()
@@ -23,6 +25,8 @@ public class WindowDetector : MonoBehaviour
             GameManager.Instance.canClean = true;
             currentWindow = other.gameObject;
             currentWindow.GetComponent<Outline>().enabled = true;
+
+            cameraManager.SetWindowCameraPosition(other.transform.position);
 
         }
     }
