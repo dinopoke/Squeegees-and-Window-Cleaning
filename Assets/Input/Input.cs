@@ -46,6 +46,15 @@ namespace PlayerControls
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Switch Camera"",
+                    ""type"": ""Button"",
+                    ""id"": ""10547599-d37d-44b6-926b-6732767b0611"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -70,6 +79,17 @@ namespace PlayerControls
                     ""action"": ""Clean"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7cd76fd-ff97-4c71-a9db-9259746ffd4c"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Switch Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -80,6 +100,7 @@ namespace PlayerControls
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
             m_Player_Clean = m_Player.FindAction("Clean", throwIfNotFound: true);
+            m_Player_SwitchCamera = m_Player.FindAction("Switch Camera", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -143,12 +164,14 @@ namespace PlayerControls
         private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
         private readonly InputAction m_Player_Move;
         private readonly InputAction m_Player_Clean;
+        private readonly InputAction m_Player_SwitchCamera;
         public struct PlayerActions
         {
             private @Input m_Wrapper;
             public PlayerActions(@Input wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
             public InputAction @Clean => m_Wrapper.m_Player_Clean;
+            public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -164,6 +187,9 @@ namespace PlayerControls
                 @Clean.started += instance.OnClean;
                 @Clean.performed += instance.OnClean;
                 @Clean.canceled += instance.OnClean;
+                @SwitchCamera.started += instance.OnSwitchCamera;
+                @SwitchCamera.performed += instance.OnSwitchCamera;
+                @SwitchCamera.canceled += instance.OnSwitchCamera;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -174,6 +200,9 @@ namespace PlayerControls
                 @Clean.started -= instance.OnClean;
                 @Clean.performed -= instance.OnClean;
                 @Clean.canceled -= instance.OnClean;
+                @SwitchCamera.started -= instance.OnSwitchCamera;
+                @SwitchCamera.performed -= instance.OnSwitchCamera;
+                @SwitchCamera.canceled -= instance.OnSwitchCamera;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -195,6 +224,7 @@ namespace PlayerControls
         {
             void OnMove(InputAction.CallbackContext context);
             void OnClean(InputAction.CallbackContext context);
+            void OnSwitchCamera(InputAction.CallbackContext context);
         }
     }
 }
