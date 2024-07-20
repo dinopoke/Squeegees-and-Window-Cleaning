@@ -65,8 +65,8 @@ public class LiftControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        rb.velocity = moveInput * speed * Time.deltaTime;
+        rb.velocity = moveInput * speed * Time.fixedDeltaTime;
     }
 }
