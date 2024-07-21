@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,9 @@ public class GameManager : MonoBehaviour
     public CameraManager cameraManager;
 
     public GameObject cleanWindow;
+
+    public int NumberOfWindowsCleaned;
+    public static event Action AddCleanedWindowEvent;
 
     private void Awake() 
     { 
@@ -38,5 +42,10 @@ public class GameManager : MonoBehaviour
 
     public void ReplaceWindowWithClean(Vector3 position) {
         Instantiate(cleanWindow, position, Quaternion.Euler(0, 90, 0));
+    }
+
+    public void AddCleanWindow() {
+        NumberOfWindowsCleaned++;
+        AddCleanedWindowEvent?.Invoke();
     }
 }
