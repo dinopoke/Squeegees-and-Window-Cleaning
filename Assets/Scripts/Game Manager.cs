@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     public CameraManager cameraManager;
 
+    public GameObject cleanWindow;
+
     private void Awake() 
     { 
         // If there is an instance, and it's not me, delete myself.
@@ -34,9 +36,7 @@ public class GameManager : MonoBehaviour
         canClean = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void ReplaceWindowWithClean(Vector3 position) {
+        Instantiate(cleanWindow, position, Quaternion.Euler(0, 90, 0));
     }
 }

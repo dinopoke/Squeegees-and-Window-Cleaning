@@ -8,6 +8,9 @@ public class CleanableWindow : MonoBehaviour {
     public float cleaningSpeed = 0.5f; // Speed of the cleaning tool
     public float cursorSpeed = 0.5f; // Speed of cursor movement
     public int cleanRadius = 20;
+    public float cleanlinessThreshold = 0.95f;
+    private bool isWindowClean;
+    private bool checkCleanliness;
 
     private Texture2D maskTexture;
     private Material material;
@@ -63,17 +66,62 @@ public class CleanableWindow : MonoBehaviour {
     }
 
     void Update() {
-        // Update cursor position based on the analog stick input
-        cursorPosition += moveInput * cursorSpeed * Time.deltaTime;
 
-        // Clamp cursor position to stay within the window bounds
-        cursorPosition.x = Mathf.Clamp01(cursorPosition.x);
-        cursorPosition.y = Mathf.Clamp01(cursorPosition.y);
+        if (!isWindowClean) {
 
-        if (isCleaning) {
-            CleanAt(cursorPosition);
+            // Update cursor position based on the analog stick input
+            cursorPosition += moveInput * cursorSpeed * Time.deltaTime;
+
+            // Clamp cursor position to stay within the window bounds
+            cursorPosition.x = Mathf.Clamp01(cursorPosition.x);
+            cursorPosition.y = Mathf.Clamp01(cursorPosition.y);
+
+            if (isCleaning) {
+                checkCleanliness = true;
+                CleanAt(cursorPosition);
+            }
+
+            if (!isCleaning) {
+                if (checkCleanliness) {
+                    checkCleanliness = false;
+                    float cleanliness = CalculateCleanliness();
+                    if (cleanliness >= cleanlinessThreshold) {
+                        Debug.Log("Window is completely clean!");
+                        AutoCleanWindow();
+                    }
+                }
+            }
         }
     }
+
+
+    private float CalculateCleanliness() {
+        // Retrieve all pixel data from the texture
+        Color[] pixels = maskTexture.GetPixels();
+        int cleanPixels = 0;
+        int totalPixels = maskTexture.width * maskTexture.height;
+
+        // Process the pixel data to count clean pixels
+        for (int i = 0; i < pixels.Length; i++) {
+            if (pixels[i].r > 0.5f) {
+                cleanPixels++;
+            }
+        }
+
+        // Log the number of clean pixels
+        Debug.Log("Clean pixels: " + cleanPixels);
+
+        return (float)cleanPixels / totalPixels;
+    }
+
+    void AutoCleanWindow() {
+        isWindowClean = true;
+        GameManager.Instance.ReplaceWindowWithClean(this.transform.position);
+        GameManager.Instance.canClean = false;
+        Destroy(this.gameObject);
+        
+    }
+
 
     void OnMove(InputAction.CallbackContext context) {
         moveInput = context.ReadValue<Vector2>();

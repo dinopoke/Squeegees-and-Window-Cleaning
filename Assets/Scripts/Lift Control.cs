@@ -13,6 +13,7 @@ public class LiftControl : MonoBehaviour
     public WindowDetector windowDetector;
 
     public float speed = 10;
+    public float downwardSpeedMultiplier = 2f;
     private Vector2 moveInput;
     private Rigidbody rb;
 
@@ -36,6 +37,7 @@ public class LiftControl : MonoBehaviour
 
     void SwapCamera(InputAction.CallbackContext context) {
         if(context.performed){
+
             if(GameManager.Instance.canClean == true){
                 cameraManager.SwapCameras();
                 if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
@@ -43,10 +45,15 @@ public class LiftControl : MonoBehaviour
                     windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = true;
                 }
                 else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){
-                    windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = false;
+                    if (windowDetector.currentWindow != null) windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = false;
                     GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
 
                 }
+
+            } else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
+                cameraManager.SwapCameras();
+                if (windowDetector.currentWindow != null) windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = false;
+                GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
             }
 
         }
@@ -67,6 +74,9 @@ public class LiftControl : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = moveInput * speed * Time.fixedDeltaTime;
+        bool isMovingDownward = moveInput.y < 0;
+        float adjustedSpeed = isMovingDownward ? speed * downwardSpeedMultiplier : speed;
+        rb.velocity = moveInput * adjustedSpeed * Time.fixedDeltaTime;
+
     }
 }

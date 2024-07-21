@@ -9,6 +9,8 @@ public class CameraManager : MonoBehaviour
 
     private float windowCamZPos;
 
+    public Outline currentOutline;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,10 +32,12 @@ public class CameraManager : MonoBehaviour
         if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){
             windowCamera.SetActive(false);
             buildingCamera.SetActive(true);
+            if (currentOutline != null) currentOutline.enabled = true;
         }
         else if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
             windowCamera.SetActive(true);
             buildingCamera.SetActive(false);
+            if (currentOutline != null) currentOutline.enabled = false;
         }
     }
 }

@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: dirtyTexture
       value: 
       objectReference: {fileID: 2800000, guid: 3887ed044525aec4baea4da0c032acba, type: 3}
+    - target: {fileID: 324057221518855894, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
+      propertyPath: cleanlinessThreshold
+      value: 0.98
+      objectReference: {fileID: 0}
     - target: {fileID: 6218165597899586388, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: m_Name
       value: Window02

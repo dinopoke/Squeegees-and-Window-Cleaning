@@ -7,6 +7,8 @@ public class WindowDetector : MonoBehaviour
 
     [SerializeField] private CameraManager cameraManager;
 
+    private Outline outline;
+
     public GameObject currentWindow;
     // Start is called before the first frame update
     void Start()
@@ -24,8 +26,9 @@ public class WindowDetector : MonoBehaviour
         if(other.gameObject.CompareTag("Window")){
             GameManager.Instance.canClean = true;
             currentWindow = other.gameObject;
-            currentWindow.GetComponent<Outline>().enabled = true;
-
+            outline = other.GetComponent<Outline>();
+            outline.enabled = true;
+            cameraManager.currentOutline = outline;
             cameraManager.SetWindowCameraPosition(other.transform.position);
 
         }
