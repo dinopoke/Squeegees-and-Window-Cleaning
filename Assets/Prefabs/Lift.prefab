@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraManager: {fileID: 0}
-  currentWindow: {fileID: 0}
+  currentFocusedObject: {fileID: 0}
 --- !u!1 &5551762318284721056
 GameObject:
   m_ObjectHideFlags: 0

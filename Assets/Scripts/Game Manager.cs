@@ -19,7 +19,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject cleanWindow;
 
+    [SerializeField] private PlayerStats playerStats;
+
     public int NumberOfWindowsCleaned;
+    private int increaseHungerCounter;
+    [SerializeField] private int increaseHungerRatePer = 1;
     public static event Action AddCleanedWindowEvent;
 
     private void Awake() 
@@ -49,6 +53,15 @@ public class GameManager : MonoBehaviour
 
     public void AddCleanWindow() {
         NumberOfWindowsCleaned++;
+        increaseHungerCounter++;
+        ShouldIncreaseHunger();
         AddCleanedWindowEvent?.Invoke();
+    }
+
+    private void ShouldIncreaseHunger() {
+        if (increaseHungerCounter >= increaseHungerRatePer) {
+            playerStats.ChangeHungerRate(-.3f);
+            increaseHungerCounter = 0;
+        }
     }
 }

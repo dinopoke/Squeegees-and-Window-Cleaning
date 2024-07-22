@@ -89,7 +89,6 @@ public class CleanableWindow : MonoBehaviour {
                     checkCleanliness = false;
                     float cleanliness = CalculateCleanliness();
                     if (cleanliness >= cleanlinessThreshold) {
-                        Debug.Log("Window is completely clean!");
                         GameManager.Instance.AddCleanWindow();
                         AutoCleanWindow();
                     }

@@ -27,6 +27,8 @@ public class Food : MonoBehaviour {
     private void OnClick() {
         if (playerStats.CheckHunger(50)) {
             lunchText?.Invoke("I'm not really that hungry");
+        } else if (!playerStats.CheckToilet(10)) {
+            lunchText?.Invoke("I should use the toilet first!");
         } else {
             GameManager.Instance.currentGamestate = GameState.occupied;
             if (eating != null) StopCoroutine(eating);
@@ -39,9 +41,11 @@ public class Food : MonoBehaviour {
             yield return new WaitForSeconds(.2f);
             lunchText?.Invoke("Eating Food...");
             playerStats.ChangeHunger(2);
-            playerStats.ChangeToilet(-1);
+            //playerStats.ChangeToilet(-1);
         }
         GameManager.Instance.currentGamestate = GameState.takingBreak;
+        playerStats.ChangeHungerRate(1.3f);
+        if (!playerStats.CheckToilet(90)) playerStats.Fullness(true);
         lunchText?.Invoke("Done!");
     }
 }

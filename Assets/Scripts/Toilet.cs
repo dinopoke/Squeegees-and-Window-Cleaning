@@ -41,6 +41,7 @@ public class Toilet : MonoBehaviour {
             playerStats.ChangeToilet(1);
         }
         GameManager.Instance.currentGamestate = GameState.takingBreak;
+        playerStats.Fullness(false);
         toiletText?.Invoke("Finished!");
     }
 }
