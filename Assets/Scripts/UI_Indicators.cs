@@ -23,6 +23,8 @@ public class UI_Indicators : MonoBehaviour {
         PlayerStats.OnToiletChange += OnToiletChange;
         LiftControl.sendTextPopUp += ShowPopUpText;
         CleanableWindow.sendTextPopUp += ShowPopUpText;
+        Food.lunchText += ShowPopUpText;
+        Toilet.toiletText += ShowPopUpText;
     }
 
     private void OnCleanWindow() {
@@ -69,6 +71,8 @@ public class UI_Indicators : MonoBehaviour {
         PlayerStats.OnToiletChange -= OnToiletChange;
         LiftControl.sendTextPopUp -= ShowPopUpText;
         CleanableWindow.sendTextPopUp -= ShowPopUpText;
+        Food.lunchText -= ShowPopUpText;
+        Toilet.toiletText -= ShowPopUpText;
     }
 
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
 
-    private int hunger = 100;
+    private int hunger = 90;
     private int toiletBreak = 100;
 
     [SerializeField] private float hungerRate = 3f;
@@ -18,6 +18,11 @@ public class PlayerStats : MonoBehaviour {
 
     public static event Action<int> OnHungerChange;
     public static event Action<int> OnToiletChange;
+
+    private void Start() {
+        OnHungerChange?.Invoke(hunger);
+        OnToiletChange?.Invoke(toiletBreak);
+    }
 
     private void Update() {
 
@@ -53,6 +58,20 @@ public class PlayerStats : MonoBehaviour {
 
     public bool CheckToilet(int value) {
         return toiletBreak >= value;
+    }
+
+    public void ChangeHunger(int value) {
+        int newHunger = hunger + value;
+        hunger = (int)Mathf.Clamp(newHunger, 0f, 100f);
+        OnHungerChange?.Invoke(hunger);
+        hungerCounter = -15f;
+    }
+    
+    public void ChangeToilet(int value) {
+        int newToilet = toiletBreak + value;
+        toiletBreak = (int)Mathf.Clamp(newToilet, 0f, 100f);
+        OnToiletChange?.Invoke(toiletBreak);
+        toiletCounter = 0f;
     }
 
 }

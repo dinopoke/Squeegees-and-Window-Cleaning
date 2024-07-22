@@ -13,7 +13,7 @@ public class CameraTarget : MonoBehaviour {
     }
 
     private void Update() {
-        position.y = lift.transform.position.y;
+        position.y = Mathf.Clamp(lift.transform.position.y, -60, float.MaxValue);
         transform.position = position;
     }
 

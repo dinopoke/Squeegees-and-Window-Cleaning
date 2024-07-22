@@ -1,8 +1,15 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using static GameManager;
 
 public class Toilet : MonoBehaviour {
+
+    [SerializeField] private PlayerStats playerStats;
+
+    public static event Action<string> toiletText;
+
+    private Coroutine goingToToilet;
 
     void Update() {
         if (Input.GetMouseButtonDown(0)) {
@@ -18,6 +25,22 @@ public class Toilet : MonoBehaviour {
     }
 
     private void OnClick() {
-        Debug.Log("Toilet object clicked!");
+        if (playerStats.CheckToilet(50)) {
+            toiletText?.Invoke("I don't need to use the toilet");
+        } else {
+            GameManager.Instance.currentGamestate = GameState.occupied;
+            if (goingToToilet != null) StopCoroutine(goingToToilet);
+            goingToToilet = StartCoroutine(UsingToilet());
+        }
+    }
+
+    private IEnumerator UsingToilet() {
+        while (!playerStats.CheckToilet(99)) {
+            yield return new WaitForSeconds(.2f);
+            toiletText?.Invoke("Using the Toilet...");
+            playerStats.ChangeToilet(1);
+        }
+        GameManager.Instance.currentGamestate = GameState.takingBreak;
+        toiletText?.Invoke("Finished!");
     }
 }
