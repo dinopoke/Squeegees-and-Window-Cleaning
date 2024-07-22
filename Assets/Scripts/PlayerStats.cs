@@ -8,8 +8,8 @@ public class PlayerStats : MonoBehaviour {
     private int hunger = 100;
     private int toiletBreak = 100;
 
-    [SerializeField] private float hungerRate = 4f;
-    [SerializeField] private float toiletRate = 10f;
+    [SerializeField] private float hungerRate = 3f;
+    [SerializeField] private float toiletRate = 8f;
     private float hungerUrgencyRate = 0f;
     private float toiletUrgencyRate = 0f;
 
@@ -47,6 +47,13 @@ public class PlayerStats : MonoBehaviour {
         }
     }
 
+    public bool CheckHunger(int value) { 
+        return hunger >= value;
+    }
+
+    public bool CheckToilet(int value) {
+        return toiletBreak >= value;
+    }
 
 }
 

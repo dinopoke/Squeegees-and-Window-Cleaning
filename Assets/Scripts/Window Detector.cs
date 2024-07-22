@@ -9,7 +9,7 @@ public class WindowDetector : MonoBehaviour
 
     private Outline outline;
 
-    public GameObject currentWindow;
+    public GameObject currentFocusedObject;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,20 +25,50 @@ public class WindowDetector : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.CompareTag("Window")){
             GameManager.Instance.canClean = true;
-            currentWindow = other.gameObject;
+            currentFocusedObject = other.gameObject;
             outline = other.GetComponent<Outline>();
             outline.enabled = true;
             cameraManager.currentOutline = outline;
             cameraManager.SetWindowCameraPosition(other.transform.position);
-
         }
+
+        if (other.gameObject.CompareTag("LunchBox")) {
+            GameManager.Instance.canTakeBreak = true;
+            currentFocusedObject = other.gameObject;
+            outline = other.GetComponent<Outline>();
+            outline.enabled = true;
+            cameraManager.currentOutline = outline;
+            cameraManager.SetWindowCameraPosition(other.transform.position);
+        }
+        
+        if (other.gameObject.CompareTag("Toilet")) {
+            GameManager.Instance.canTakeBreak = true;
+            currentFocusedObject = other.gameObject;
+            outline = other.GetComponent<Outline>();
+            outline.enabled = true;
+            cameraManager.currentOutline = outline;
+            cameraManager.SetWindowCameraPosition(other.transform.position);
+        }
+
     }
 
     private void OnTriggerExit(Collider other) {
         if(other.gameObject.CompareTag("Window")){
             GameManager.Instance.canClean = false;
-            currentWindow.GetComponent<Outline>().enabled = false;
-            currentWindow = null;
+            currentFocusedObject.GetComponent<Outline>().enabled = false;
+            currentFocusedObject = null;
+        }
+
+        if (other.gameObject.CompareTag("LunchBox")) {
+            GameManager.Instance.canTakeBreak = false;
+            currentFocusedObject.GetComponent<Outline>().enabled = false;
+            currentFocusedObject = null;
+        }
+
+        if (other.gameObject.CompareTag("Toilet")) {
+            GameManager.Instance.canTakeBreak = false;
+            currentFocusedObject.GetComponent<Outline>().enabled = false;
+            currentFocusedObject = null;
         }
     }
 }

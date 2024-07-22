@@ -7,9 +7,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-    public enum GameState {cleaning, movingLift};
+    public enum GameState {cleaning, movingLift, takingBreak, menu};
 
     public bool canClean;
+
+    public bool canTakeBreak;
 
     public GameState currentGamestate;
 
@@ -38,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         currentGamestate = GameState.movingLift;
         canClean = false;
+        canTakeBreak = false;
     }
 
     public void ReplaceWindowWithClean(Vector3 position) {

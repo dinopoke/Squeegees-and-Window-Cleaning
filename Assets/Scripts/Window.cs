@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,6 +20,8 @@ public class CleanableWindow : MonoBehaviour {
     private Vector2 moveInput;
     private bool isCleaning;
     private Vector2 cursorPosition;
+
+    public static event Action<string> sendTextPopUp;
 
     void Awake() {
         controls = new PlayerControls.Input();
@@ -117,6 +120,7 @@ public class CleanableWindow : MonoBehaviour {
 
     void AutoCleanWindow() {
         isWindowClean = true;
+        sendTextPopUp?.Invoke("Window Cleaned");
         GameManager.Instance.ReplaceWindowWithClean(this.transform.position);
         GameManager.Instance.canClean = false;
         Destroy(this.gameObject);

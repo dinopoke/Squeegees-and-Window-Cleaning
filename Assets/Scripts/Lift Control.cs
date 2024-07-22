@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,10 @@ using UnityEngine.InputSystem;
 public class LiftControl : MonoBehaviour
 {
     private PlayerControls.Input controls;
+    [SerializeField] private PlayerStats playerStats;
+    private TextBoxContent textBoxContent;
+
+    public static event Action<string> sendTextPopUp;
 
     public CameraManager cameraManager;
 
@@ -21,6 +26,7 @@ public class LiftControl : MonoBehaviour
     void Awake() {
         controls = new PlayerControls.Input();
         rb = this.GetComponent<Rigidbody>();
+        textBoxContent = new();
     }
 
     void OnEnable() {
@@ -38,23 +44,55 @@ public class LiftControl : MonoBehaviour
     void SwapCamera(InputAction.CallbackContext context) {
         if(context.performed){
 
-            if(GameManager.Instance.canClean == true){
+            if (GameManager.Instance.canClean) {
+
+                if (!playerStats.CheckToilet(12)) {
+                    sendTextPopUp?.Invoke(textBoxContent.GetRandomToiletText());
+                    return;
+                }
+
+                if (!playerStats.CheckHunger(12)) {
+                    sendTextPopUp?.Invoke(textBoxContent.GetRandomHungerText());
+                    return;
+                }
+
                 cameraManager.SwapCameras();
-                if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
+                if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
                     GameManager.Instance.currentGamestate = GameManager.GameState.cleaning;
-                    windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = true;
-                }
-                else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){
-                    if (windowDetector.currentWindow != null) windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = false;
+                    windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = true;
+                } else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
+                    if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
                     GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
-
                 }
-
-            } else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
-                cameraManager.SwapCameras();
-                if (windowDetector.currentWindow != null) windowDetector.currentWindow.GetComponent<CleanableWindow>().enabled = false;
-                GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
+                return;
             }
+
+            if (GameManager.Instance.canTakeBreak) {
+                cameraManager.SwapCameras();
+                if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
+                    GameManager.Instance.currentGamestate = GameManager.GameState.takingBreak;
+                    windowDetector.currentFocusedObject.GetComponent<BreakArea>().ToggleItem(true);
+                } else if (GameManager.Instance.currentGamestate == GameManager.GameState.takingBreak) {
+                    GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
+                    windowDetector.currentFocusedObject.GetComponent<BreakArea>().ToggleItem(false);
+                }
+                return;
+            }
+
+            if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
+                cameraManager.SwapCameras();
+                if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
+                GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
+                return;
+            }
+
+            /*
+            if (GameManager.Instance.currentGamestate == GameManager.GameState.takingBreak) {
+                cameraManager.SwapCameras();
+                GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
+                return;
+            }
+            */
 
         }
     }

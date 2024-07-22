@@ -12,11 +12,17 @@ public class UI_Indicators : MonoBehaviour {
     [SerializeField] private Image hungerColour;
     [SerializeField] private Image toiletColour;
 
+    [SerializeField] private GameObject textPopUpBox;
+    [SerializeField] private TextMeshProUGUI popUpText;
+    [SerializeField] private float textBoxTime = 4f;
+    private Coroutine showTextBox;
 
     private void Start() {
         GameManager.AddCleanedWindowEvent += OnCleanWindow;
         PlayerStats.OnHungerChange += OnHungerChange;
         PlayerStats.OnToiletChange += OnToiletChange;
+        LiftControl.sendTextPopUp += ShowPopUpText;
+        CleanableWindow.sendTextPopUp += ShowPopUpText;
     }
 
     private void OnCleanWindow() {
@@ -45,10 +51,24 @@ public class UI_Indicators : MonoBehaviour {
         }
     }
 
+    private void ShowPopUpText(string text) {
+        popUpText.text = text;
+        if (showTextBox != null) StopCoroutine(showTextBox);
+        textPopUpBox.SetActive(true);
+        showTextBox = StartCoroutine(TextBoxAliveTime());
+    }
+
+    private IEnumerator TextBoxAliveTime() {
+        yield return new WaitForSeconds(textBoxTime);
+        textPopUpBox.SetActive(false);
+    }
+
     private void OnDisable() {
         GameManager.AddCleanedWindowEvent -= OnCleanWindow;
         PlayerStats.OnHungerChange -= OnHungerChange;
         PlayerStats.OnToiletChange -= OnToiletChange;
+        LiftControl.sendTextPopUp -= ShowPopUpText;
+        CleanableWindow.sendTextPopUp -= ShowPopUpText;
     }
 
 }

@@ -29,15 +29,18 @@ public class CameraManager : MonoBehaviour
 
 
     public void SwapCameras(){
-        if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning){
+        if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning || GameManager.Instance.currentGamestate == GameManager.GameState.takingBreak) {
             windowCamera.SetActive(false);
             buildingCamera.SetActive(true);
             if (currentOutline != null) currentOutline.enabled = true;
+            return;
         }
-        else if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
+
+        if(GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
             windowCamera.SetActive(true);
             buildingCamera.SetActive(false);
             if (currentOutline != null) currentOutline.enabled = false;
-        }
+            return;
+        }    
     }
 }
