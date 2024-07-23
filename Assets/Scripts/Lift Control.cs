@@ -24,6 +24,9 @@ public class LiftControl : MonoBehaviour
 
     private MeshRenderer meshRenderer;
 
+    private bool isMoving;
+    private bool hasStoppedSoundPlayed = true;
+
     [SerializeField] private GameObject liftVisuals;
 
 
@@ -107,16 +110,53 @@ public class LiftControl : MonoBehaviour
         }
     }
 
+
+
     void LiftMove(InputAction.CallbackContext context) {
         if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
             moveInput = context.ReadValue<Vector2>();
-        }
 
+            if (moveInput != Vector2.zero) {
+                if (!isMoving) {
+                    isMoving = true;
+                    if (hasStoppedSoundPlayed) liftAudioSource.Stop();
+                    if (!liftAudioSource.isPlaying) {
+                        liftAudioSource.clip = AudioManager.GetAudioClip(AudioManager.Sound.liftmove);
+                        float randomStartTime = UnityEngine.Random.Range(0, liftAudioSource.clip.length);
+                        liftAudioSource.time = randomStartTime;
+                        liftAudioSource.loop = true;
+                        //liftAudioSource.volume = 0.35f;
+                        liftAudioSource.Play();
+                        hasStoppedSoundPlayed = false;
+}
+                }
+            } else {
+                if (isMoving) {
+                    isMoving = false;
+                    if (liftAudioSource.isPlaying) liftAudioSource.Stop();
+                    if (!hasStoppedSoundPlayed) {
+                        hasStoppedSoundPlayed = true;
+                        /*
+                        liftAudioSource.clip = AudioManager.GetAudioClip(AudioManager.Sound.liftstop);
+                        liftAudioSource.loop = false;
+                        liftAudioSource.volume = 0.2f;
+                        liftAudioSource.Play();
+                        */
+                        AudioManager.PlaySound(AudioManager.Sound.liftstop, new(32, this.transform.position.y + 28));
+                    }
+                }
+            }
+        }
     }
+    private AudioSource liftAudioSource;
     // Start is called before the first frame update
     void Start()
     {
-        
+
+        liftAudioSource = gameObject.GetComponent<AudioSource>();
+        liftAudioSource.clip = AudioManager.GetAudioClip(AudioManager.Sound.liftmove);
+        liftAudioSource.loop = true;
+
     }
 
     // Update is called once per frame

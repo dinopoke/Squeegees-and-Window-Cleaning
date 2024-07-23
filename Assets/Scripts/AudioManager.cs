@@ -5,7 +5,12 @@ using UnityEngine;
 public static class AudioManager {
 
     public enum Sound {
-        None, 
+        None,
+        eat,
+        toilet,
+        liftmove,
+        liftstop,
+
 
     }
 
@@ -25,7 +30,7 @@ public static class AudioManager {
         
     }
 
-    private static AudioClip GetAudioClip(Sound sound) {
+    public static AudioClip GetAudioClip(Sound sound) {
         foreach (AudioAssets.SoundAudioClip soundAudioClip in AudioAssets.instance.SoundAudioClipArray) {
             if (soundAudioClip.sound == sound) {
                 return soundAudioClip.audioClip;

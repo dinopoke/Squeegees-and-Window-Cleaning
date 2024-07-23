@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
 
-    private int hunger = 90;
-    private int toiletBreak = 100;
+    private int hunger = 75;
+    private int toiletBreak = 99;
 
     [SerializeField] private float hungerRate = 3f;
     [SerializeField] private float maxHungerRate = .5f;

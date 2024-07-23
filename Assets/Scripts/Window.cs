@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -23,6 +24,9 @@ public class CleanableWindow : MonoBehaviour {
 
     public static event Action<string> sendTextPopUp;
 
+    private AudioSource windowAudioSource;
+    public List<AudioClip> audioClips;
+
     void Awake() {
         controls = new PlayerControls.Input();
     }
@@ -41,6 +45,9 @@ public class CleanableWindow : MonoBehaviour {
 
     void Start() {
         mainCamera = Camera.main;
+
+        windowAudioSource = gameObject.AddComponent<AudioSource>();
+        windowAudioSource.loop = true;
 
         // Initialize cursor position to the center of the window
         cursorPosition = new Vector2(0.5f, 0.5f);
@@ -68,6 +75,12 @@ public class CleanableWindow : MonoBehaviour {
         GetComponent<Renderer>().material = material;
     }
 
+    private void SqueegeeSound() {
+        if (windowAudioSource.isPlaying) return;
+        windowAudioSource.clip = audioClips[UnityEngine.Random.Range(0, audioClips.Count)];
+        windowAudioSource.Play();
+    }
+
     void Update() {
 
         if (!isWindowClean) {
@@ -80,11 +93,13 @@ public class CleanableWindow : MonoBehaviour {
             cursorPosition.y = Mathf.Clamp01(cursorPosition.y);
 
             if (isCleaning) {
+                SqueegeeSound();
                 checkCleanliness = true;
                 CleanAt(cursorPosition);
             }
 
             if (!isCleaning) {
+                if (windowAudioSource.isPlaying) windowAudioSource.Stop();
                 if (checkCleanliness) {
                     checkCleanliness = false;
                     float cleanliness = CalculateCleanliness();

@@ -31,6 +31,7 @@ public class Toilet : MonoBehaviour {
             GameManager.Instance.currentGamestate = GameState.occupied;
             if (goingToToilet != null) StopCoroutine(goingToToilet);
             goingToToilet = StartCoroutine(UsingToilet());
+            MusicPlayer.instance.playJingle2();
         }
     }
 
@@ -43,5 +44,6 @@ public class Toilet : MonoBehaviour {
         GameManager.Instance.currentGamestate = GameState.takingBreak;
         playerStats.Fullness(false);
         toiletText?.Invoke("Finished!");
+        AudioManager.PlaySound(AudioManager.Sound.toilet, this.transform.position);
     }
 }

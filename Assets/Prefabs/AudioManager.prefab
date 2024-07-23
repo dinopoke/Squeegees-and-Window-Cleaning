@@ -47,7 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalSounds: []
   spatialSounds: []
-  SoundAudioClipArray: []
+  SoundAudioClipArray:
+  - sound: 3
+    audioClip: {fileID: 8300000, guid: 69e14f2c7f8a93c43ba9830d7928fd30, type: 3}
+  - sound: 4
+    audioClip: {fileID: 8300000, guid: 1bf39d4c265bab44a91e4e44449cfd59, type: 3}
+  - sound: 1
+    audioClip: {fileID: 8300000, guid: f93c083ab5c97e44891a42e81b15fde3, type: 3}
+  - sound: 2
+    audioClip: {fileID: 8300000, guid: cc060458a217f8b4e93e80b54c214521, type: 3}
   GlobalSoundClipArray: []
 --- !u!1 &4221079777205851856
 GameObject:
@@ -58,7 +66,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8564078425757987383}
-  - component: {fileID: 3076488031511734205}
+  - component: {fileID: 8211479019679697747}
   m_Layer: 0
   m_Name: SoundPool
   m_TagString: Untagged
@@ -81,7 +89,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4368869984390059735}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3076488031511734205
+--- !u!114 &8211479019679697747
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,7 +98,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 4221079777205851856}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dad39c8e24ab5245915fc2b6cbc5ebc, type: 3}
+  m_Script: {fileID: 11500000, guid: d95b7919ffc06f04db41eaf8dae97b71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
+  playSoundPrefab: {fileID: 9165828361223489413, guid: f258f6907f88063438ca7d3770532b4d, type: 3}
+  playSoundPrefabPool: []

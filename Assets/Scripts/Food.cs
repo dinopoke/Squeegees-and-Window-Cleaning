@@ -33,6 +33,8 @@ public class Food : MonoBehaviour {
             GameManager.Instance.currentGamestate = GameState.occupied;
             if (eating != null) StopCoroutine(eating);
             eating = StartCoroutine(EatingLunch());
+            MusicPlayer.instance.playJingle1();
+            AudioManager.PlaySound(AudioManager.Sound.eat, this.transform.position);
         }
     }
 
