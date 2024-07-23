@@ -24,6 +24,8 @@ public class LiftControl : MonoBehaviour
 
     private MeshRenderer meshRenderer;
 
+    [SerializeField] private GameObject liftVisuals;
+
 
     void Awake() {
         controls = new PlayerControls.Input();
@@ -62,12 +64,12 @@ public class LiftControl : MonoBehaviour
                 cameraManager.SwapCameras();
                 if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
                     GameManager.Instance.currentGamestate = GameManager.GameState.cleaning;
-                    meshRenderer.enabled = false;
+                    liftVisuals.SetActive(false);
                     windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = true;
                 } else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
                     if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
                     GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
-                    meshRenderer.enabled = true;
+                    liftVisuals.SetActive(true);
                 }
                 return;
             }
@@ -76,11 +78,11 @@ public class LiftControl : MonoBehaviour
                 cameraManager.SwapCameras();
                 if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
                     GameManager.Instance.currentGamestate = GameManager.GameState.takingBreak;
-                    meshRenderer.enabled = false;
+                    liftVisuals.SetActive(false);
                     windowDetector.currentFocusedObject.GetComponent<BreakArea>().ToggleItem(true);
                 } else if (GameManager.Instance.currentGamestate == GameManager.GameState.takingBreak) {
                     GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
-                    meshRenderer.enabled = true;
+                    liftVisuals.SetActive(true);
                     windowDetector.currentFocusedObject.GetComponent<BreakArea>().ToggleItem(false);
                 }
                 return;
@@ -90,7 +92,7 @@ public class LiftControl : MonoBehaviour
                 cameraManager.SwapCameras();
                 if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
                 GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
-                meshRenderer.enabled = true;
+                liftVisuals.SetActive(true);
                 return;
             }
 
