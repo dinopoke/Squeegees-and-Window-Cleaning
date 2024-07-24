@@ -26,7 +26,8 @@ public class WindowDetector : MonoBehaviour
         if(other.gameObject.CompareTag("Window")){
             GameManager.Instance.canClean = true;
             currentFocusedObject = other.gameObject;
-            outline = other.GetComponent<Outline>();
+            outline = other.GetComponent<CleanableWindow>().windowOutline;
+            if (outline == null) outline = other.GetComponent<Outline>();
             outline.enabled = true;
             cameraManager.currentOutline = outline;
             cameraManager.SetWindowCameraPosition(other.transform.position);
@@ -55,7 +56,7 @@ public class WindowDetector : MonoBehaviour
     private void OnTriggerExit(Collider other) {
         if(other.gameObject.CompareTag("Window")){
             GameManager.Instance.canClean = false;
-            currentFocusedObject.GetComponent<Outline>().enabled = false;
+            currentFocusedObject.GetComponent<CleanableWindow>().windowOutline.enabled = false;
             currentFocusedObject = null;
         }
 

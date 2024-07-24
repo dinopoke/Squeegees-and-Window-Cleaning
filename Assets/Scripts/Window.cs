@@ -22,6 +22,8 @@ public class CleanableWindow : MonoBehaviour {
     private bool isCleaning;
     private Vector2 cursorPosition;
 
+    public Outline windowOutline;
+
     public static event Action<string> sendTextPopUp;
 
     private AudioSource windowAudioSource;

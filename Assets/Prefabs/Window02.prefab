@@ -8,17 +8,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 324057221518855894, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
+      propertyPath: windowOutline
+      value: 
+      objectReference: {fileID: 4244371313796074156}
     - target: {fileID: 6218165597899586388, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: m_Name
       value: Window02
       objectReference: {fileID: 0}
     - target: {fileID: 8900190071889469057, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8900190071889469057, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8900190071889469057, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -28.5
       objectReference: {fileID: 0}
     - target: {fileID: 8900190071889469057, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
       propertyPath: m_LocalPosition.z
@@ -55,5 +63,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7489121175190518476, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4244371313796074156}
   m_SourcePrefab: {fileID: 100100000, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
+--- !u!1 &2165499630503033324 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7489121175190518476, guid: 67a1eadc92a6ea74ea8b8a28de36da76, type: 3}
+  m_PrefabInstance: {fileID: 8783095108226073376}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4244371313796074156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2165499630503033324}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 0, g: 0.9607844, b: 0, a: 1}
+  outlineWidth: 5.4
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
