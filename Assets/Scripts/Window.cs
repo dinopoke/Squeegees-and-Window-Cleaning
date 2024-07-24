@@ -40,6 +40,10 @@ public class CleanableWindow : MonoBehaviour {
     }
 
     void OnDisable() {
+        controls.Player.Move.performed -= OnMove;
+        controls.Player.Move.canceled -= OnMove;
+        controls.Player.Clean.performed -= ctx => isCleaning = true;
+        controls.Player.Clean.canceled -= ctx => isCleaning = false;
         controls.Disable();
     }
 
@@ -137,8 +141,7 @@ public class CleanableWindow : MonoBehaviour {
         sendTextPopUp?.Invoke("Window Cleaned");
         GameManager.Instance.ReplaceWindowWithClean(this.transform.position);
         GameManager.Instance.canClean = false;
-        Destroy(this.gameObject);
-        
+        Destroy(this.gameObject);        
     }
 
 

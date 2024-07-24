@@ -40,20 +40,27 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "QuitGame",
+                    "type": "Button",
+                    "id": "a7d5f533-30e0-4138-bb68-34bfb69c7490",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AnalogStickMove",
+                    "type": "Button",
+                    "id": "c1f79fb9-e2ec-4067-8909-12d657b9fb9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "10c1dedc-c7b0-4106-bf2c-8929690c6e3f",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "af8bbea2-8f2d-4ef5-a361-a8c9a2ad5736",
@@ -227,6 +234,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Lift Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3f6495f-2b10-4bbc-9635-3f314cb42b90",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuitGame",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10c1dedc-c7b0-4106-bf2c-8929690c6e3f",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AnalogStickMove",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

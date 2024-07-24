@@ -64,20 +64,27 @@ namespace PlayerControls
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""QuitGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7d5f533-30e0-4138-bb68-34bfb69c7490"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AnalogStickMove"",
+                    ""type"": ""Button"",
+                    ""id"": ""c1f79fb9-e2ec-4067-8909-12d657b9fb9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""10c1dedc-c7b0-4106-bf2c-8929690c6e3f"",
-                    ""path"": ""<Gamepad>/leftStick"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""af8bbea2-8f2d-4ef5-a361-a8c9a2ad5736"",
@@ -253,6 +260,28 @@ namespace PlayerControls
                     ""action"": ""Lift Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a3f6495f-2b10-4bbc-9635-3f314cb42b90"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuitGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""10c1dedc-c7b0-4106-bf2c-8929690c6e3f"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AnalogStickMove"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -265,6 +294,8 @@ namespace PlayerControls
             m_Player_Clean = m_Player.FindAction("Clean", throwIfNotFound: true);
             m_Player_SwitchCamera = m_Player.FindAction("Switch Camera", throwIfNotFound: true);
             m_Player_LiftMove = m_Player.FindAction("Lift Move", throwIfNotFound: true);
+            m_Player_QuitGame = m_Player.FindAction("QuitGame", throwIfNotFound: true);
+            m_Player_AnalogStickMove = m_Player.FindAction("AnalogStickMove", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -330,6 +361,8 @@ namespace PlayerControls
         private readonly InputAction m_Player_Clean;
         private readonly InputAction m_Player_SwitchCamera;
         private readonly InputAction m_Player_LiftMove;
+        private readonly InputAction m_Player_QuitGame;
+        private readonly InputAction m_Player_AnalogStickMove;
         public struct PlayerActions
         {
             private @Input m_Wrapper;
@@ -338,6 +371,8 @@ namespace PlayerControls
             public InputAction @Clean => m_Wrapper.m_Player_Clean;
             public InputAction @SwitchCamera => m_Wrapper.m_Player_SwitchCamera;
             public InputAction @LiftMove => m_Wrapper.m_Player_LiftMove;
+            public InputAction @QuitGame => m_Wrapper.m_Player_QuitGame;
+            public InputAction @AnalogStickMove => m_Wrapper.m_Player_AnalogStickMove;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -359,6 +394,12 @@ namespace PlayerControls
                 @LiftMove.started += instance.OnLiftMove;
                 @LiftMove.performed += instance.OnLiftMove;
                 @LiftMove.canceled += instance.OnLiftMove;
+                @QuitGame.started += instance.OnQuitGame;
+                @QuitGame.performed += instance.OnQuitGame;
+                @QuitGame.canceled += instance.OnQuitGame;
+                @AnalogStickMove.started += instance.OnAnalogStickMove;
+                @AnalogStickMove.performed += instance.OnAnalogStickMove;
+                @AnalogStickMove.canceled += instance.OnAnalogStickMove;
             }
 
             private void UnregisterCallbacks(IPlayerActions instance)
@@ -375,6 +416,12 @@ namespace PlayerControls
                 @LiftMove.started -= instance.OnLiftMove;
                 @LiftMove.performed -= instance.OnLiftMove;
                 @LiftMove.canceled -= instance.OnLiftMove;
+                @QuitGame.started -= instance.OnQuitGame;
+                @QuitGame.performed -= instance.OnQuitGame;
+                @QuitGame.canceled -= instance.OnQuitGame;
+                @AnalogStickMove.started -= instance.OnAnalogStickMove;
+                @AnalogStickMove.performed -= instance.OnAnalogStickMove;
+                @AnalogStickMove.canceled -= instance.OnAnalogStickMove;
             }
 
             public void RemoveCallbacks(IPlayerActions instance)
@@ -398,6 +445,8 @@ namespace PlayerControls
             void OnClean(InputAction.CallbackContext context);
             void OnSwitchCamera(InputAction.CallbackContext context);
             void OnLiftMove(InputAction.CallbackContext context);
+            void OnQuitGame(InputAction.CallbackContext context);
+            void OnAnalogStickMove(InputAction.CallbackContext context);
         }
     }
 }

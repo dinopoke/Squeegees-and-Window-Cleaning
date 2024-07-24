@@ -164,7 +164,7 @@ public class LiftControl : MonoBehaviour
     {
         bool isMovingDownward = moveInput.y < 0;
         float adjustedSpeed = isMovingDownward ? speed * downwardSpeedMultiplier : speed;
-        rb.velocity = moveInput * adjustedSpeed * Time.fixedDeltaTime;
+        rb.velocity = new Vector2(moveInput.x * speed, moveInput.y * adjustedSpeed) * Time.fixedDeltaTime;
 
     }
 }
