@@ -44,4 +44,10 @@ public class CameraManager : MonoBehaviour
             return;
         }    
     }
+
+    public void SwapToBuildingCam() {
+        windowCamera.SetActive(false);
+        buildingCamera.SetActive(true);
+        if (currentOutline != null) currentOutline.enabled = true;
+    }
 }

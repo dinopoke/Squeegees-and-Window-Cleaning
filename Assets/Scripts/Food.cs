@@ -25,6 +25,8 @@ public class Food : MonoBehaviour {
     }
 
     private void OnClick() {
+        if (GameManager.Instance.currentGamestate == GameState.occupied) return;
+
         if (playerStats.CheckHunger(50)) {
             lunchText?.Invoke("I'm not really that hungry");
         } else if (!playerStats.CheckToilet(10)) {

@@ -25,6 +25,8 @@ public class Toilet : MonoBehaviour {
     }
 
     private void OnClick() {
+        if (GameManager.Instance.currentGamestate == GameState.occupied) return;
+
         if (playerStats.CheckToilet(50)) {
             toiletText?.Invoke("I don't need to use the toilet");
         } else {

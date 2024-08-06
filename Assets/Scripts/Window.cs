@@ -23,6 +23,7 @@ public class CleanableWindow : MonoBehaviour {
     private Vector2 cursorPosition;
 
     public Outline windowOutline;
+    public LayerMask raycastLayerMask;
 
     public static event Action<string> sendTextPopUp;
 
@@ -47,6 +48,9 @@ public class CleanableWindow : MonoBehaviour {
         controls.Player.Clean.performed -= ctx => isCleaning = true;
         controls.Player.Clean.canceled -= ctx => isCleaning = false;
         controls.Disable();
+        isCleaning = false;
+        if (windowAudioSource.isPlaying) windowAudioSource.Stop();
+
     }
 
     void Start() {
@@ -87,9 +91,26 @@ public class CleanableWindow : MonoBehaviour {
         windowAudioSource.Play();
     }
 
+    private Vector2 adjustment = new(0.05f, 0.075f);
+    private Vector2 offset = new(0.5f, 0.5f);
+
     void Update() {
 
         if (!isWindowClean) {
+
+            Vector3 mousePos = Input.mousePosition;
+            Ray ray = mainCamera.ScreenPointToRay(mousePos);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, raycastLayerMask)) {
+                if (hit.collider != null && hit.collider.gameObject == gameObject) {
+                    Vector3 localHit = transform.InverseTransformPoint(hit.point);
+                    //Vector3 normalizedHit = new Vector3(localHit.x / transform.localScale.x + 0.5f, localHit.y / transform.localScale.y + 0.5f, localHit.z / transform.localScale.z + 0.5f);
+                    Vector3 normalizedHit = new Vector3(localHit.x * transform.localScale.x * adjustment.x, localHit.y * transform.localScale.y * adjustment.y, localHit.z * transform.localScale.z * adjustment.x);
+                    //cursorPosition = new Vector2(localHit.z + adjustment.x, localHit.y + adjustment.y);
+                    cursorPosition = new Vector2(normalizedHit.z + offset.x, normalizedHit.y + offset.y);
+                }
+            }
+
+            /*
 
             // Update cursor position based on the analog stick input
             cursorPosition += moveInput * cursorSpeed * Time.deltaTime;
@@ -97,6 +118,8 @@ public class CleanableWindow : MonoBehaviour {
             // Clamp cursor position to stay within the window bounds
             cursorPosition.x = Mathf.Clamp01(cursorPosition.x);
             cursorPosition.y = Mathf.Clamp01(cursorPosition.y);
+
+            */
 
             if (isCleaning) {
                 SqueegeeSound();
@@ -115,6 +138,8 @@ public class CleanableWindow : MonoBehaviour {
                     }
                 }
             }
+
+            
         }
     }
 

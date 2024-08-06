@@ -30,11 +30,14 @@ public class GameControllerUI : MonoBehaviour
     }
 
     private void StartGamePerformed(InputAction.CallbackContext context) {
+
+        /*
         if (!gameStarted) {
             gameStarted = true;
             OnGameStart?.Invoke(transitionTime, true);
             StartCoroutine(StartGameTransition());
         }
+        */
     }
 
     private IEnumerator StartGameTransition() {

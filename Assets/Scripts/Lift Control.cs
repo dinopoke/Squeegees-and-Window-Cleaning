@@ -29,6 +29,8 @@ public class LiftControl : MonoBehaviour
 
     [SerializeField] private GameObject liftVisuals;
 
+    private Coroutine delayWindowActivation;
+
 
     void Awake() {
         controls = new PlayerControls.Input();
@@ -52,6 +54,8 @@ public class LiftControl : MonoBehaviour
     void SwapCamera(InputAction.CallbackContext context) {
         if(context.performed){
 
+            moveInput = Vector2.zero;
+
             if (GameManager.Instance.canClean) {
 
                 if (!playerStats.CheckToilet(5)) {
@@ -68,8 +72,10 @@ public class LiftControl : MonoBehaviour
                 if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
                     GameManager.Instance.currentGamestate = GameManager.GameState.cleaning;
                     liftVisuals.SetActive(false);
-                    windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = true;
+                    if (delayWindowActivation != null) StopCoroutine(delayWindowActivation);
+                    delayWindowActivation = StartCoroutine(ActivateWindowCleaning());
                 } else if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
+                    if (delayWindowActivation != null) StopCoroutine(delayWindowActivation);
                     if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
                     GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
                     liftVisuals.SetActive(true);
@@ -79,6 +85,7 @@ public class LiftControl : MonoBehaviour
 
             if (GameManager.Instance.canTakeBreak) {
                 cameraManager.SwapCameras();
+                if (delayWindowActivation != null) StopCoroutine(delayWindowActivation);
                 if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
                     GameManager.Instance.currentGamestate = GameManager.GameState.takingBreak;
                     liftVisuals.SetActive(false);
@@ -92,28 +99,41 @@ public class LiftControl : MonoBehaviour
             }
 
             if (GameManager.Instance.currentGamestate == GameManager.GameState.cleaning) {
+                if (delayWindowActivation != null) StopCoroutine(delayWindowActivation);
                 cameraManager.SwapCameras();
                 if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
                 GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
                 liftVisuals.SetActive(true);
                 return;
-            }
-
-            /*
-            if (GameManager.Instance.currentGamestate == GameManager.GameState.takingBreak) {
-                cameraManager.SwapCameras();
+            } else if (GameManager.Instance.currentGamestate != GameManager.GameState.movingLift) {
+                if (delayWindowActivation != null) StopCoroutine(delayWindowActivation);
+                cameraManager.SwapToBuildingCam();
+                if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = false;
                 GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
-                return;
-            }
-            */
+                liftVisuals.SetActive(true);
 
-        }
+            }
+
+                /*
+                if (GameManager.Instance.currentGamestate == GameManager.GameState.takingBreak) {
+                    cameraManager.SwapCameras();
+                    GameManager.Instance.currentGamestate = GameManager.GameState.movingLift;
+                    return;
+                }
+                */
+
+            }
+    }
+
+    private IEnumerator ActivateWindowCleaning() {
+        yield return new WaitForSeconds(2.1f);
+        if (windowDetector.currentFocusedObject != null) windowDetector.currentFocusedObject.GetComponent<CleanableWindow>().enabled = true;
     }
 
 
 
     void LiftMove(InputAction.CallbackContext context) {
-        if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift){
+        if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
             moveInput = context.ReadValue<Vector2>();
 
             if (moveInput != Vector2.zero) {
@@ -128,7 +148,7 @@ public class LiftControl : MonoBehaviour
                         //liftAudioSource.volume = 0.35f;
                         liftAudioSource.Play();
                         hasStoppedSoundPlayed = false;
-}
+                    }
                 }
             } else {
                 if (isMoving) {
@@ -146,6 +166,8 @@ public class LiftControl : MonoBehaviour
                     }
                 }
             }
+        } else {
+            moveInput = Vector2.zero;
         }
     }
     private AudioSource liftAudioSource;
@@ -160,11 +182,20 @@ public class LiftControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
-    {
-        bool isMovingDownward = moveInput.y < 0;
-        float adjustedSpeed = isMovingDownward ? speed * downwardSpeedMultiplier : speed;
-        rb.velocity = new Vector2(moveInput.x * speed, moveInput.y * adjustedSpeed) * Time.fixedDeltaTime;
+    void FixedUpdate() {
 
+        if (GameManager.Instance.currentGamestate == GameManager.GameState.movingLift) {
+            bool isMovingDownward = moveInput.y < 0;
+            float adjustedSpeed = isMovingDownward ? speed * downwardSpeedMultiplier : speed;
+            rb.velocity = new Vector2(moveInput.x * speed, moveInput.y * adjustedSpeed) * Time.fixedDeltaTime;
+        } else {
+            moveInput = Vector2.zero;
+            rb.velocity = Vector2.zero;
+            if (liftAudioSource.isPlaying) {
+                liftAudioSource.Stop();
+                AudioManager.PlaySound(AudioManager.Sound.liftstop, new(32, this.transform.position.y + 28));
+                hasStoppedSoundPlayed = false;
+            }
+        }
     }
 }

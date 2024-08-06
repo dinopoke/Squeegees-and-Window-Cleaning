@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 324057221518855894}
   - component: {fileID: 5636222236070880535}
   - component: {fileID: 2167951707970531462}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Window
   m_TagString: Window
   m_Icon: {fileID: 0}
@@ -129,6 +129,9 @@ MonoBehaviour:
   cleanRadius: 40
   cleanlinessThreshold: 0.995
   windowOutline: {fileID: 0}
+  raycastLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
   audioClips:
   - {fileID: 8300000, guid: 12468f2207af78b44b9068772585c2f7, type: 3}
   - {fileID: 8300000, guid: 102c11ae7f0a24c479e75a22f7fbee1f, type: 3}
